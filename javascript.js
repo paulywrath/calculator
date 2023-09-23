@@ -1,3 +1,13 @@
+//Capture which number button was pressed.
+    const numberButtons = document.querySelectorAll('.number');
+
+    numberButtons.forEach((numberButton) => {
+
+        numberButton.addEventListener('click', () => {
+        alert(numberButton.id);
+        });
+    });
+
 let firstNumber;
 let operator;
 let secondNumber;
@@ -9,16 +19,16 @@ const divide = (a, b) => a / b;
 
 function operate (firstNumber, operator, secondNumber) {
     switch (operator) {
-        case add:
+        case '+':
             add(firstNumber, secondNumber);
             break;
-        case subtract:
+        case '-':
             subtract(firstNumber, secondNumber);
             break;
-        case multiply:
+        case '*':
             multiply(firstNumber, secondNumber);
             break;
-        case divide:
+        case '/':
             divide(firstNumber, secondNumber);
     }
 }
