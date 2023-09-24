@@ -1,6 +1,6 @@
 let display = document.querySelector('#display');
 let existingDisplay = display.textContent;
-let updatedDisplay;
+//let updatedDisplay;
 
 //Add which number button was pressed to the display.
     const numberButtons = document.querySelectorAll('.number');
@@ -8,9 +8,10 @@ let updatedDisplay;
     numberButtons.forEach((numberButton) => {
 
         numberButton.addEventListener('click', () => {
-            updatedDisplay = existingDisplay + numberButton.id;
-            existingDisplay = updatedDisplay;
-            display.textContent = updatedDisplay;
+            //updatedDisplay = existingDisplay + numberButton.id;
+            //existingDisplay = updatedDisplay;
+            existingDisplay += numberButton.id;
+            display.textContent = existingDisplay;
         });
     });
 
@@ -18,23 +19,43 @@ let firstNumber;
 let operator;
 let secondNumber;
 
-const add = (a, b) => a + b;
-const subtract = (a, b) => a - b;
-const multiply = (a, b) => a * b;
 const divide = (a, b) => a / b;
+const multiply = (a, b) => a * b;
+const subtract = (a, b) => a - b;
+const add = (a, b) => a + b;
 
 function operate (firstNumber, operator, secondNumber) {
+    //Don't operate if no previous operation, because this runs every time an operator is pressed.
+    if (firstNumber === undefined) {
+        return secondNumber;
+    }
+    //Operate if you have all operation variables.
     switch (operator) {
-        case '+':
-            add(firstNumber, secondNumber);
+        case '/':
+            return divide(firstNumber, secondNumber);
+            break;
+        case 'x':
+            return multiply(firstNumber, secondNumber)
             break;
         case '-':
-            subtract(firstNumber, secondNumber);
+            return subtract(firstNumber, secondNumber);
             break;
-        case '*':
-            multiply(firstNumber, secondNumber);
-            break;
-        case '/':
-            divide(firstNumber, secondNumber);
+        case '+':
+            return add(firstNumber, secondNumber);            
     }
 }
+
+let operatorArr = []; //Store which operator buttons were pressed here. 
+let operation; //Store the output of the last operation here.
+
+//Run operation when operator button is pressed.
+    const operatorButtons = document.querySelectorAll('.operator');
+
+    operatorButtons.forEach((operatorButton) => {
+
+        operatorButton.addEventListener('click', () => {
+            operatorArr.push(operatorButton.id); //Store which operator pressed
+            operation = operate (operation, operatorArr[1], existingDisplay);
+            display.textContent = operation;
+        });
+    });
