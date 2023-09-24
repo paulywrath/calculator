@@ -24,7 +24,7 @@ const multiply = (a, b) => a * b;
 const subtract = (a, b) => a - b;
 const add = (a, b) => a + b;
 
-function operate (firstNumber, operator, secondNumber) {
+function operate(firstNumber, operator, secondNumber) {
     //Don't operate if no previous operation, because this runs every time an operator is pressed.
     if (firstNumber === undefined) {
         return secondNumber;
@@ -54,8 +54,10 @@ let operation; //Store the output of the last operation here.
     operatorButtons.forEach((operatorButton) => {
 
         operatorButton.addEventListener('click', () => {
-            operatorArr.push(operatorButton.id); //Store which operator pressed
-            operation = operate (operation, operatorArr[1], existingDisplay);
+            existingDisplay = Number(existingDisplay);
+            operatorArr.unshift(operatorButton.id); //Store which operator pressed
+            operation = operate(operation, operatorArr[1], existingDisplay);
             display.textContent = operation;
+            existingDisplay = '';
         });
     });
