@@ -1,10 +1,16 @@
-//Capture which number button was pressed.
+let display = document.querySelector('#display');
+let existingDisplay = display.textContent;
+let updatedDisplay;
+
+//Add which number button was pressed to the display.
     const numberButtons = document.querySelectorAll('.number');
 
     numberButtons.forEach((numberButton) => {
 
         numberButton.addEventListener('click', () => {
-        alert(numberButton.id);
+            updatedDisplay = existingDisplay + numberButton.id;
+            existingDisplay = updatedDisplay;
+            display.textContent = updatedDisplay;
         });
     });
 
