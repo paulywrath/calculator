@@ -1,4 +1,4 @@
-let display = document.querySelector('#display');
+const display = document.querySelector('#display');
 let existingDisplay = display.textContent;
 //let updatedDisplay;
 
@@ -60,4 +60,14 @@ let operation; //Store the output of the last operation here.
             display.textContent = operation;
             existingDisplay = '';
         });
+    });
+
+//Run operation when "=" button is pressed.    
+    const equalsButton = document.querySelector('#equals');
+
+    equalsButton.addEventListener('click', () => {
+        existingDisplay = Number(existingDisplay);
+        operation = operate(operation, operatorArr[0], existingDisplay);
+        display.textContent = operation;
+        existingDisplay = '';
     });
