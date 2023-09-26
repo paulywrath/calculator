@@ -48,9 +48,9 @@ function operate(firstNumber, operator, secondNumber) {
 }
 
 //Round decimals
-function roundNumber(num, dec) {
-    return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
-  }
+function roundToSix(num) {
+  return +(Math.round(num + "e+6") + "e-6");
+}
 
 let operatorArr = []; //Store which operator buttons were pressed here. 
 let operation; //Store the output of the last operation here.
@@ -63,8 +63,7 @@ let operation; //Store the output of the last operation here.
         operatorButton.addEventListener('click', () => {
             existingDisplay = Number(existingDisplay);
             operatorArr.unshift(operatorButton.id); //Store which operator pressed
-            operation = operate(operation, operatorArr[1], existingDisplay);
-            operation = roundNumber(operation, 6);
+            operation = roundToSix(operate(operation, operatorArr[1], existingDisplay));
             display.textContent = operation;
             existingDisplay = '';
         });
@@ -75,8 +74,7 @@ let operation; //Store the output of the last operation here.
 
     equalsButton.addEventListener('click', () => {
         existingDisplay = Number(existingDisplay);
-        operation = operate(operation, operatorArr[0], existingDisplay);
-        operation = roundNumber(operation, 6);
+        operation = roundToSix(operate(operation, operatorArr[0], existingDisplay));
         display.textContent = operation;
         existingDisplay = '';
     });
