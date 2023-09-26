@@ -1,6 +1,6 @@
-const display = document.querySelector('#display');
-let existingDisplay = display.textContent;
-//let updatedDisplay;
+//Node and variable for display
+    const display = document.querySelector('#display');
+    let existingDisplay = display.textContent;
 
 //Add which number button was pressed to the display.
     const numberButtons = document.querySelectorAll('.number');
@@ -8,8 +8,6 @@ let existingDisplay = display.textContent;
     numberButtons.forEach((numberButton) => {
 
         numberButton.addEventListener('click', () => {
-            //updatedDisplay = existingDisplay + numberButton.id;
-            //existingDisplay = updatedDisplay;
             if (existingDisplay.length < 8) {
                 existingDisplay += numberButton.id;
                 display.textContent = existingDisplay;
@@ -17,64 +15,90 @@ let existingDisplay = display.textContent;
         });
     });
 
-let firstNumber;
-let operator;
-let secondNumber;
+//Clear entry from display
+    const clearEntry = document.querySelector('#CE');
 
-const divide = (a, b) => a / b;
-const multiply = (a, b) => a * b;
-const subtract = (a, b) => a - b;
-const add = (a, b) => a + b;
+    clearEntry.addEventListener('click', () => {
+        existingDisplay = '';
+        display.textContent = existingDisplay;
+    });
 
-function operate(firstNumber, operator, secondNumber) {
-    //Don't operate if no previous operation, because this runs every time an operator is pressed.
-    if (firstNumber === undefined) {
-        return secondNumber;
+//All clear button function
+    const allClear = document.querySelector('#AC');
+
+    allClear.addEventListener('click', () => {
+        existingDisplay = '';
+        display.textContent = existingDisplay;
+        operatorArr = [];
+        operation = '';
+
+        //Delete these if I end up not using these variables.
+        firstNumber = '';
+        operator = '';
+        secondNumber = '';
+    });
+
+//Arithmetic operations     
+    //I'm not actually using these three variables. Should I be? Can I delete them?
+    let firstNumber;
+    let operator;
+    let secondNumber;
+
+    const divide = (a, b) => a / b;
+    const multiply = (a, b) => a * b;
+    const subtract = (a, b) => a - b;
+    const add = (a, b) => a + b;
+
+    function operate(firstNumber, operator, secondNumber) {
+        //Don't operate if no previous operation, because this runs every time an operator is pressed.
+        if (firstNumber === undefined) {
+            return secondNumber;
+        }
+        //Operate if you have all operation variables.
+        switch (operator) {
+            case '/':
+                return divide(firstNumber, secondNumber);
+                break;
+            case 'x':
+                return multiply(firstNumber, secondNumber)
+                break;
+            case '-':
+                return subtract(firstNumber, secondNumber);
+                break;
+            case '+':
+                return add(firstNumber, secondNumber);            
+        }
     }
-    //Operate if you have all operation variables.
-    switch (operator) {
-        case '/':
-            return divide(firstNumber, secondNumber);
-            break;
-        case 'x':
-            return multiply(firstNumber, secondNumber)
-            break;
-        case '-':
-            return subtract(firstNumber, secondNumber);
-            break;
-        case '+':
-            return add(firstNumber, secondNumber);            
+
+//Round decimals to six places.
+    function roundToSix(num) {
+    return +(Math.round(num + "e+6") + "e-6");
     }
-}
 
-//Round decimals
-function roundToSix(num) {
-  return +(Math.round(num + "e+6") + "e-6");
-}
+//Operation button functions    
+    let operatorArr = []; //Store which operator buttons were pressed here. 
+    let operation; //Store the output of the last operation here.
 
-let operatorArr = []; //Store which operator buttons were pressed here. 
-let operation; //Store the output of the last operation here.
+    //Run operation when operator button is pressed.
+        const operatorButtons = document.querySelectorAll('.operator');
 
-//Run operation when operator button is pressed.
-    const operatorButtons = document.querySelectorAll('.operator');
+        operatorButtons.forEach((operatorButton) => {
 
-    operatorButtons.forEach((operatorButton) => {
+            operatorButton.addEventListener('click', () => {
+                existingDisplay = Number(existingDisplay);
+                operatorArr.unshift(operatorButton.id); //Store which operator pressed
+                operation = roundToSix(operate(operation, operatorArr[1], existingDisplay));
+                display.textContent = operation;
+                existingDisplay = '';
+            });
+        });
 
-        operatorButton.addEventListener('click', () => {
+    //Run operation when "=" button is pressed.    
+        const equalsButton = document.querySelector('#equals');
+
+        equalsButton.addEventListener('click', () => {
             existingDisplay = Number(existingDisplay);
-            operatorArr.unshift(operatorButton.id); //Store which operator pressed
-            operation = roundToSix(operate(operation, operatorArr[1], existingDisplay));
+            operation = roundToSix(operate(operation, operatorArr[0], existingDisplay));
             display.textContent = operation;
             existingDisplay = '';
         });
-    });
-
-//Run operation when "=" button is pressed.    
-    const equalsButton = document.querySelector('#equals');
-
-    equalsButton.addEventListener('click', () => {
-        existingDisplay = Number(existingDisplay);
-        operation = roundToSix(operate(operation, operatorArr[0], existingDisplay));
-        display.textContent = operation;
-        existingDisplay = '';
-    });
