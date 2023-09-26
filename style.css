@@ -13,11 +13,11 @@
 #display {
     border-top: 2px solid black;
     border-bottom: 2px solid black;
-    height: 51px;
+    height: 67px;
     width: 316px;
     background-color: rgb(240, 235, 235);
-    font-family: 'Segment14Regular';
-    font-size: 60px; 
+    font-family: 'Digital-7 Mono'/*, 'Segment14Regular'*/; 
+    font-size: 84px; 
 }
 
 .row {
