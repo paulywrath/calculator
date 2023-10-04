@@ -30,7 +30,7 @@
         existingDisplay = '';
         display.textContent = existingDisplay;
         operatorArr = [];
-        operation = '';
+        operation = undefined;
 
         //Delete these if I end up not using these variables.
         firstNumber = '';
@@ -85,10 +85,15 @@
         operatorButtons.forEach((operatorButton) => {
 
             operatorButton.addEventListener('click', () => {
-                existingDisplay = Number(existingDisplay);
+                //Convert existingDisplay from a string to a number to do arithmetic. 
+                existingDisplay = Number(existingDisplay); 
+
                 operatorArr.unshift(operatorButton.id); //Store which operator pressed
+                
                 operation = roundToSix(operate(operation, operatorArr[1], existingDisplay));
+                
                 display.textContent = operation;
+                
                 existingDisplay = '';
             });
         });
@@ -97,8 +102,12 @@
         const equalsButton = document.querySelector('#equals');
 
         equalsButton.addEventListener('click', () => {
+            //Convert existingDisplay from a string to a number to do arithmetic. 
             existingDisplay = Number(existingDisplay);
+            
             operation = roundToSix(operate(operation, operatorArr[0], existingDisplay));
+            
             display.textContent = operation;
+            
             existingDisplay = '';
         });
