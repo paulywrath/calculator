@@ -1,6 +1,6 @@
 //Node and variable for display
     const display = document.querySelector('#display');
-    let existingDisplay = display.textContent;
+    let existingDisplay = '';
 
 //Add which number button was pressed to the display.
     const numberButtons = document.querySelectorAll('.number');
@@ -32,17 +32,19 @@
         operatorArr = [];
         operation = undefined;
 
-        //Delete these if I end up not using these variables.
+        /*Delete these if I end up not using these variables.
         firstNumber = '';
         operator = '';
         secondNumber = '';
+        */
     });
 
 //Arithmetic operations     
-    //I'm not actually using these three variables. Should I be? Can I delete them?
+    /*I'm not actually using these three variables. Should I be? Can I delete them?
     let firstNumber;
     let operator;
     let secondNumber;
+    */
 
     const divide = (a, b) => a / b;
     const multiply = (a, b) => a * b;
@@ -54,6 +56,13 @@
         if (firstNumber === undefined) {
             return secondNumber;
         }
+
+        /*Don't operate if no new number entered in existing display, 
+        because this runs every time an operator is pressed.*/
+        if (secondNumber === 0) {
+            return firstNumber;
+        }
+
         //Operate if you have all operation variables.
         switch (operator) {
             case '/':
