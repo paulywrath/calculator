@@ -40,6 +40,7 @@
     });
 
 //Arithmetic operations     
+
     /*I'm not actually using these three variables. Should I be? Can I delete them?
     let firstNumber;
     let operator;
@@ -59,17 +60,24 @@
 
         /*Don't operate if no new number entered in existing display, 
         because this runs every time an operator is pressed.*/
-        if (secondNumber === 0) {
+        if (secondNumber === '') {
             return firstNumber;
         }
+
+        //Convert existingDisplay from a string to a number to do arithmetic. 
+        secondNumber = Number(secondNumber);
 
         //Operate if you have all operation variables.
         switch (operator) {
             case '/':
-                return divide(firstNumber, secondNumber);
+                if (secondNumber === 0) {
+                    return 'LOL NO'; 
+                } else {
+                    return divide(firstNumber, secondNumber);
+                }
                 break;
             case 'x':
-                return multiply(firstNumber, secondNumber)
+                return multiply(firstNumber, secondNumber);
                 break;
             case '-':
                 return subtract(firstNumber, secondNumber);
@@ -94,15 +102,10 @@
         operatorButtons.forEach((operatorButton) => {
 
             operatorButton.addEventListener('click', () => {
-                //Convert existingDisplay from a string to a number to do arithmetic. 
-                existingDisplay = Number(existingDisplay); 
-
                 operatorArr.unshift(operatorButton.id); //Store which operator pressed
-                
-                operation = roundToSix(operate(operation, operatorArr[1], existingDisplay));
-                
+                //operation = roundToSix(operate(operation, operatorArr[1], existingDisplay));
+                operation = operate(operation, operatorArr[1], existingDisplay);
                 display.textContent = operation;
-                
                 existingDisplay = '';
             });
         });
@@ -110,13 +113,9 @@
     //Run operation when "=" button is pressed.    
         const equalsButton = document.querySelector('#equals');
 
-        equalsButton.addEventListener('click', () => {
-            //Convert existingDisplay from a string to a number to do arithmetic. 
-            existingDisplay = Number(existingDisplay);
-            
-            operation = roundToSix(operate(operation, operatorArr[0], existingDisplay));
-            
+        equalsButton.addEventListener('click', () => {            
+            //operation = roundToSix(operate(operation, operatorArr[0], existingDisplay));
+            operation = operate(operation, operatorArr[0], existingDisplay);
             display.textContent = operation;
-            
             existingDisplay = '';
         });
