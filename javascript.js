@@ -6,7 +6,6 @@
     const numberButtons = document.querySelectorAll('.number');
 
     numberButtons.forEach((numberButton) => {
-
         numberButton.addEventListener('click', () => {
             if (existingDisplay.length < 8) {
                 existingDisplay += numberButton.id;
@@ -37,9 +36,9 @@
         operator = '';
         secondNumber = '';
         */
-    });
+});
 
-//Arithmetic operations     
+//Arithmetic operations
     /*I'm not actually using these three variables. Should I be? Can I delete them?
     let firstNumber;
     let operator;
@@ -50,7 +49,7 @@
     const multiply = (a, b) => a * b;
     const subtract = (a, b) => a - b;
     const add = (a, b) => a + b;
-
+    
     function operate(firstNumber, operator, secondNumber) {
         //Don't operate if no previous operation, because this runs every time an operator is pressed.
         if (firstNumber === undefined) {
@@ -81,42 +80,41 @@
 
 //Round decimals to six places.
     function roundToSix(num) {
-    return +(Math.round(num + "e+6") + "e-6");
+        return +(Math.round(num + "e+6") + "e-6");
     }
-
+    
 //Operation button functions    
     let operatorArr = []; //Store which operator buttons were pressed here. 
     let operation; //Store the output of the last operation here.
 
-    //Run operation when operator button is pressed.
-        const operatorButtons = document.querySelectorAll('.operator');
-
-        operatorButtons.forEach((operatorButton) => {
-
-            operatorButton.addEventListener('click', () => {
-                //Convert existingDisplay from a string to a number to do arithmetic. 
-                existingDisplay = Number(existingDisplay); 
-
-                operatorArr.unshift(operatorButton.id); //Store which operator pressed
-                
-                operation = roundToSix(operate(operation, operatorArr[1], existingDisplay));
-                
-                display.textContent = operation;
-                
-                existingDisplay = '';
-            });
-        });
-
-    //Run operation when "=" button is pressed.    
-        const equalsButton = document.querySelector('#equals');
-
-        equalsButton.addEventListener('click', () => {
+//Run operation when operator button is pressed.
+    const operatorButtons = document.querySelectorAll('.operator');
+    
+    operatorButtons.forEach((operatorButton) => {
+        operatorButton.addEventListener('click', () => {
             //Convert existingDisplay from a string to a number to do arithmetic. 
-            existingDisplay = Number(existingDisplay);
-            
-            operation = roundToSix(operate(operation, operatorArr[0], existingDisplay));
-            
+            existingDisplay = Number(existingDisplay); 
+
+            operatorArr.unshift(operatorButton.id); //Store which operator pressed
+
+            operation = roundToSix(operate(operation, operatorArr[1], existingDisplay));
+
             display.textContent = operation;
-            
+
             existingDisplay = '';
         });
+    });
+
+//Run operation when "=" button is pressed.    
+    const equalsButton = document.querySelector('#equals');
+
+    equalsButton.addEventListener('click', () => {
+        //Convert existingDisplay from a string to a number to do arithmetic. 
+        existingDisplay = Number(existingDisplay);
+
+        operation = roundToSix(operate(operation, operatorArr[0], existingDisplay));
+
+        display.textContent = operation;
+
+        existingDisplay = '';
+    });
