@@ -28,6 +28,9 @@
     allClear.addEventListener('click', () => {
         existingDisplay = '';
         display.textContent = existingDisplay;
+        numString = undefined;
+        maxDecimalPlaces = undefined;
+        isNum = undefined; 
         operatorArr = [];
         operation = undefined;
 });
@@ -71,24 +74,30 @@
     
     //Create variables to use in roundToEight().
         let numString;
-        let maxDecimalPlaces; 
+        let maxDecimalPlaces;
+        let isNum; 
 
     function roundToEight(num) {
         
-        //Make a string version to count how many places it has.
-        numString = num.toString();
-        
+        isNum = Number(num);
+
+        numString = num.toString(); //Make a string version to count how many places it has.
+
         if (numString.length > 8) {
-            if (num > 99999999) {
+            if (isNum > 99999999) {
                 //Convert numbers that are too big to exponent format.
-                return num.toExponential(2);
+                return isNum.toExponential(2);
             } else {
                 //Round decimals of numbers that don't need exponent format.
                 maxDecimalPlaces = 8 - (numString.indexOf('.') + 1);
-                return num.toFixed(maxDecimalPlaces);
+                if (maxDecimalPlaces < 0) {
+                    return isNum.toFixed(0);    
+                } else {
+                    return isNum.toFixed(maxDecimalPlaces);
+                }
             }
         } else {
-            return num;
+            return isNum;
         }
     }
 
