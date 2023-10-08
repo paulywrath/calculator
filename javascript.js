@@ -30,27 +30,16 @@
         display.textContent = existingDisplay;
         operatorArr = [];
         operation = undefined;
-
-        /*Delete these if I end up not using these variables.
-        firstNumber = '';
-        operator = '';
-        secondNumber = '';
-        */
 });
 
 //Arithmetic operations     
-    /*I'm not actually using these three variables. Should I be? Can I delete them?
-    let firstNumber;
-    let operator;
-    let secondNumber;
-    */
-
     const divide = (a, b) => a / b;
     const multiply = (a, b) => a * b;
     const subtract = (a, b) => a - b;
     const add = (a, b) => a + b;
-    
+
     function operate(firstNumber, operator, secondNumber) {
+
         //Don't operate if no previous operation, because this runs every time an operator is pressed.
         if (firstNumber === undefined) {
             return secondNumber;
@@ -79,13 +68,23 @@
     }
 
 //Don't let operation output exceed eight places, including decimal place.
+    
+    //Create variables to use in roundToEight().
+        let numString;
+        let maxDecimalPlaces; 
+
     function roundToEight(num) {
-        let numString = num.toString();
+        
+        //Make a string version to count how many places it has.
+        numString = num.toString();
+        
         if (numString.length > 8) {
             if (num > 99999999) {
+                //Convert numbers that are too big to exponent format.
                 return num.toExponential(2);
             } else {
-                let maxDecimalPlaces = 8 - (numString.indexOf('.') + 1);
+                //Round decimals of numbers that don't need exponent format.
+                maxDecimalPlaces = 8 - (numString.indexOf('.') + 1);
                 return num.toFixed(maxDecimalPlaces);
             }
         } else {
