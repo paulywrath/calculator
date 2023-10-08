@@ -78,11 +78,21 @@
         }
     }
 
-//Round decimals to six places.
-    function roundToSix(num) {
-        return +(Math.round(num + "e+6") + "e-6");
+//Don't let operation output exceed eight places, including decimal place.
+    function roundToEight(num) {
+        let numString = num.toString();
+        if (numString.length > 8) {
+            if (num > 99999999) {
+                return num.toExponential(2);
+            } else {
+                let maxDecimalPlaces = 8 - (numString.indexOf('.') + 1);
+                return num.toFixed(maxDecimalPlaces);
+            }
+        } else {
+            return num;
+        }
     }
-    
+
 //Operation button functions    
     let operatorArr = []; //Store which operator buttons were pressed here. 
     let operation; //Store the output of the last operation here.
@@ -97,7 +107,7 @@
 
             operatorArr.unshift(operatorButton.id); //Store which operator pressed
 
-            operation = roundToSix(operate(operation, operatorArr[1], existingDisplay));
+            operation = roundToEight(operate(operation, operatorArr[1], existingDisplay));
 
             display.textContent = operation;
 
@@ -112,7 +122,7 @@
         //Convert existingDisplay from a string to a number to do arithmetic. 
         existingDisplay = Number(existingDisplay);
 
-        operation = roundToSix(operate(operation, operatorArr[0], existingDisplay));
+        operation = roundToEight(operate(operation, operatorArr[0], existingDisplay));
 
         display.textContent = operation;
 
