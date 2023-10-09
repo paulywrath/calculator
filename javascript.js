@@ -28,6 +28,8 @@
     allClear.addEventListener('click', () => {
         existingDisplay = '';
         display.textContent = existingDisplay;
+        firstNumber = undefined;
+        secondNumber = undefined;
         numString = undefined;
         maxDecimalPlaces = undefined;
         isNum = undefined; 
@@ -36,23 +38,32 @@
 });
 
 //Arithmetic operations     
-    const divide = (a, b) => a / b;
-    const multiply = (a, b) => a * b;
-    const subtract = (a, b) => a - b;
-    const add = (a, b) => a + b;
 
-    function operate(firstNumber, operator, secondNumber) {
+    //Create variables and functions to use in operate().
+        let firstNumber;
+        let secondNumber;
+
+        const divide = (a, b) => a / b;
+        const multiply = (a, b) => a * b;
+        const subtract = (a, b) => a - b;
+        const add = (a, b) => a + b;
+
+    function operate(firstArg, operator, secondArg) {
 
         //Don't operate if no previous operation, because this runs every time an operator is pressed.
-        if (firstNumber === undefined) {
-            return secondNumber;
+        if (firstArg === undefined) {
+            return roundToEight(secondArg);
         }
 
         /*Don't operate if no new number entered in existing display, 
         because this runs every time an operator is pressed.*/
-        if (secondNumber === 0) {
-            return firstNumber;
+        if (secondArg === '0' || secondArg === '') {
+            return roundToEight(firstArg);
         }
+
+        //Make sure argument type is 'number.'
+        firstNumber = Number(firstArg);
+        secondNumber = Number(secondArg);
 
         //Operate if you have all operation variables.
         switch (operator) {
@@ -79,7 +90,7 @@
 
     function roundToEight(num) {
         
-        isNum = Number(num);
+        isNum = Number(num); //Make sure argument type is 'number.'
 
         numString = num.toString(); //Make a string version to count how many places it has.
 
@@ -110,15 +121,9 @@
     
     operatorButtons.forEach((operatorButton) => {
         operatorButton.addEventListener('click', () => {
-            //Convert existingDisplay from a string to a number to do arithmetic. 
-            existingDisplay = Number(existingDisplay); 
-
             operatorArr.unshift(operatorButton.id); //Store which operator pressed
-
             operation = roundToEight(operate(operation, operatorArr[1], existingDisplay));
-
             display.textContent = operation;
-
             existingDisplay = '';
         });
     });
@@ -127,12 +132,7 @@
     const equalsButton = document.querySelector('#equals');
 
     equalsButton.addEventListener('click', () => {
-        //Convert existingDisplay from a string to a number to do arithmetic. 
-        existingDisplay = Number(existingDisplay);
-
         operation = roundToEight(operate(operation, operatorArr[0], existingDisplay));
-
         display.textContent = operation;
-
         existingDisplay = '';
     });
