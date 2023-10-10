@@ -2,11 +2,16 @@
     const display = document.querySelector('#display');
     let existingDisplay = '';
 
+//Disable decimal button when pressed.
+    const decimal = document.getElementById('.');
+    decimal.addEventListener('click', () => {
+        decimal.disabled = true;
+    });
+
 //Add which number button was pressed to the display.
     const numberButtons = document.querySelectorAll('.number');
-
     numberButtons.forEach((numberButton) => {
-        numberButton.addEventListener('click', () => {
+        numberButton.addEventListener('click', () => {                        
             if (existingDisplay.length < 8) {
                 existingDisplay += numberButton.id;
                 display.textContent = existingDisplay;
@@ -16,15 +21,14 @@
 
 //Clear entry from display
     const clearEntry = document.querySelector('#CE');
-
     clearEntry.addEventListener('click', () => {
         existingDisplay = '';
         display.textContent = existingDisplay;
+        decimal.disabled = false;
     });
 
 //All clear button function
     const allClear = document.querySelector('#AC');
-
     allClear.addEventListener('click', () => {
         existingDisplay = '';
         display.textContent = existingDisplay;
@@ -35,6 +39,7 @@
         isNum = undefined; 
         operatorArr = [];
         operation = undefined;
+        decimal.disabled = false;
 });
 
 //Arithmetic operations     
@@ -118,21 +123,21 @@
 
 //Run operation when operator button is pressed.
     const operatorButtons = document.querySelectorAll('.operator');
-    
     operatorButtons.forEach((operatorButton) => {
         operatorButton.addEventListener('click', () => {
             operatorArr.unshift(operatorButton.id); //Store which operator pressed
             operation = roundToEight(operate(operation, operatorArr[1], existingDisplay));
             display.textContent = operation;
             existingDisplay = '';
+            decimal.disabled = false;
         });
     });
 
 //Run operation when "=" button is pressed.    
     const equalsButton = document.querySelector('#equals');
-
     equalsButton.addEventListener('click', () => {
         operation = roundToEight(operate(operation, operatorArr[0], existingDisplay));
         display.textContent = operation;
         existingDisplay = '';
+        decimal.disabled = false;
     });
