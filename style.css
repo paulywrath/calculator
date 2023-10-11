@@ -16,7 +16,7 @@
     border-bottom: 2px solid black;
     height: 67px;
     width: 316px;
-    line-height: 67px;
+    vertical-align: middle;
     background-color: rgb(240, 235, 235);
     font-family: 'Digital-7 Mono'/*, 'Segment14Regular'*/; 
     font-size: 84px; 
