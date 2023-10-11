@@ -35,13 +35,13 @@ button {
 }
 
 .clear {
-    background-color: rgb(114, 114, 210);
+    background-color: rgb(225, 190, 148);
     color: white;
 }
 
 .operator,
 #equals {
-    background-color: rgb(213, 106, 106);
+    background-color: rgb(231, 202, 166);
     color: white;
 }
 
