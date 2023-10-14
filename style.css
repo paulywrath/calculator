@@ -16,10 +16,16 @@
     border-bottom: 2px solid black;
     height: 67px;
     width: 316px;
-    vertical-align: middle;
     background-color: rgb(240, 235, 235);
     font-family: 'Digital-7 Mono'/*, 'Segment14Regular'*/; 
-    font-size: 84px; 
+    font-size: 84px;
+    /*line-height: 67px;*/
+    margin: 0;
+    padding: 0;
+    /*box-sizing: border-box;*/
+    vertical-align: middle;
+    /*display: flex;
+    align-items: center;*/
 }
 
 .row {
