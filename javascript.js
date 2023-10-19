@@ -18,7 +18,7 @@
             } 
         });
     });
-
+    
 //Clear entry from display
     const clearEntry = document.querySelector('#CE');
     clearEntry.addEventListener('click', () => {
@@ -103,9 +103,20 @@
             if (isNum > 99999999) {
                 //Convert numbers that are too big to exponent format.
                 return isNum.toExponential(2);
-            } else {
-                //Round decimals of numbers that don't need exponent format.
+            } else if (isNum < -9999999) {
+                //Convert negative numbers that are too small to exponent format.
+                return isNum.toExponential(1);
+            } else if (isNum >= 0 && isNum <= 99999999) {
+                //Round decimals of positive numbers that don't need exponent format.
                 maxDecimalPlaces = 8 - (numString.indexOf('.') + 1);
+                if (maxDecimalPlaces < 0) {
+                    return isNum.toFixed(0);    
+                } else {
+                    return isNum.toFixed(maxDecimalPlaces);
+                }
+            } else if (isNum < 0 && isNum >= -9999999) {
+                //Round decimals of negative numbers that don't need exponent format.
+                maxDecimalPlaces = 8 - (numString.indexOf('.') + 2);
                 if (maxDecimalPlaces < 0) {
                     return isNum.toFixed(0);    
                 } else {
